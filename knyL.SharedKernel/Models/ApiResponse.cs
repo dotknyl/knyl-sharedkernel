@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 
-namespace knyL.SharedKernel;
+namespace knyL.SharedKernel.Models;
 
 public interface IApiResponse
 {
