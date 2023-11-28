@@ -1,0 +1,32 @@
+
+name: Build NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build and pack NuGet package
+        run: dotnet pack --configuration Release --output ./artifacts
+      - name: Publish to GitHub NuGet registry
+        uses: GitHubPackages/publish-nuget@v1
+        with:
+          package: './artifacts/*.nupkg'
+          repository: dotknyk/knyl-sharedkernel
+          token: ${{ secrets.GITHUB_TOKEN }}
